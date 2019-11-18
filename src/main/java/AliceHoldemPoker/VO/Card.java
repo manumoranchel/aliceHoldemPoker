@@ -25,6 +25,17 @@ public class Card {
 	 */
 	private int number;
 
+	public Card(int number, Suit suit) {
+		super();
+		this.number = number;
+		this.suit = suit;
+	}
+	
+
+	public Card() {
+		super();
+	}
+	
 	public Suit getSuit() {
 		return suit;
 	}
@@ -40,4 +51,17 @@ public class Card {
 	public void setNumber(int number) {
 		this.number = number;
 	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		builder.append(number);
+		builder.append("-");
+		builder.append(suit);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }
