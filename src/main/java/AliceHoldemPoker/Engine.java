@@ -1,7 +1,7 @@
 package AliceHoldemPoker;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,7 +9,14 @@ import AliceHoldemPoker.VO.GameState;
 import AliceHoldemPoker.VO.Player;
 import AliceHoldemPoker.player.BotDecisionMaker;
 import AliceHoldemPoker.player.HumanDecisionMaker;
+import AliceHoldemPoker.poker.PokerRank;
 
+/**
+ * Game engine. Run method is the starting point.
+ * 
+ * @author Manuel Moranchel
+ *
+ */
 public class Engine {
 
 	public static int NUMBER_ROUNDS = 5;
@@ -19,6 +26,9 @@ public class Engine {
 
 	/** POJO Representing the state of the game */
 	private GameState gameState;
+	
+	/** Utility class to determine the winner */
+	private PokerRank pokerRank;
 
 	public void run() {
 		setup();
@@ -29,15 +39,8 @@ public class Engine {
 			deal();
 			getGameState().getCommunityFlopCards().add(getGameState().popCard());
 		}
-		rankWinner();
-	}
-
-	/**
-	 * Once finish, determine the winner
-	 */
-	private List<Player> rankWinner() {
-		return new ArrayList<Player>();
-
+		Integer winner = getPokerRank().rankPlayers(getGameState());
+		System.out.println(MessageFormat.format("Player[{0}] wins. gameState:[{1}]]", gameState.getPlayers().get(winner), getGameState()));
 	}
 
 	/**
@@ -66,8 +69,12 @@ public class Engine {
 		logger.log(Level.INFO, "Setting up the game");
 		setGameState(new GameState());
 		logger.log(Level.INFO, "Game play set");
+		logger.log(Level.INFO, "Setting up player");
 		initPlayers();
 		logger.log(Level.INFO, "Players initialised");
+		logger.log(Level.INFO, "Setting PokerRank");
+		setPokerRank(new PokerRank());
+		logger.log(Level.INFO, "PokerRank set");
 	}
 
 	/**
@@ -78,13 +85,14 @@ public class Engine {
 		for (int player = 0; player < NUMBER_PLAYERS; player++) {
 			getGameState().getPlayers().add(new Player(String.valueOf(player), new BotDecisionMaker()));
 		}
-		stablishHumanPlayer();
+		setHumanPlayer();
 	}
 
 	/**
-	 * Define which player is the human. This method can be override in test classes to have all bot players
+	 * Define which player is the human. This method can be override in test classes
+	 * to have all bot players
 	 */
-	protected void stablishHumanPlayer() {
+	protected void setHumanPlayer() {
 		getGameState().getPlayers().get(0).setDecisionManager(new HumanDecisionMaker());
 	}
 
@@ -94,5 +102,13 @@ public class Engine {
 
 	public void setGameState(GameState gameState) {
 		this.gameState = gameState;
+	}
+
+	public PokerRank getPokerRank() {
+		return pokerRank;
+	}
+
+	public void setPokerRank(PokerRank pokerRank) {
+		this.pokerRank = pokerRank;
 	}
 }

@@ -37,7 +37,7 @@ public class EngineTest extends Engine {
 	/**
 	 * Overriding method to have all bot players
 	 */
-	protected void stablishHumanPlayer() {
+	protected void setHumanPlayer() {
 		return;
 	}
 }
