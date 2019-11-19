@@ -32,7 +32,7 @@ The steps taken are:
 3. Study the state of art
 4. review the initial draft, perform the required changes and come with a unique solution
 5. Estimate the cost of performing the solution
-6. Given the time constraint, define an **MVP** (Minimum Value Product) That can be deliver within the allocated time
+6. Given the time constraint, define an **MVP (Minimum Value Product)** That can be deliver within the allocated time
 7. Implement the solution with test coverage
 8. Define documentation
 
@@ -40,17 +40,27 @@ Working on a distributed environment requires special attention to the documenta
 
 ## Technical solution
 ### UML
+![AliceHoldEmPokerUML](AliceHoldEmPoker.jpg)
 ### Why visitor pattern
+Similar functionality can be implemented with inheritance however this represent a better way of separating data and actions. If an action needs to be performed on data, a visitor can subscribe to it and perform the required changes.
+This pattern is extensively used in Machine Learning and because some actions will be performed by bots is a good fit for it. For further explanation on the latter, please look at the Machine Learning  
 
 ## Extra steps
+### What is missing?
+Given the time constraint the product deliver is an MVP but with the required structure to complete the exercise.
+- Add the betting system
+- Not all the ranks have been implemented
+- Decide what card the user changes before dealing
+ 
 ### Further level of abstraction
-ALl card games present a repetitive structure. Further level of abstraction can help build a framework where almost every game can be implemented. For this exercise building such structure is overengineering but the components have been defined so it can be easily adapted to the metioned framework:
+All card games present a repetitive structure. Further level of abstraction can help build a framework where almost every game can be implemented. For this exercise building such structure is overengineering but the components have been defined so it can be easily adapted to the metioned framework:
 1. Define the players
 2. Setup game (shuffle, placing cards on the table..)
-3. Loop rounds until end of the game (limited rounds like poker, a winner has been found like blakcjack...)
+3. Loop rounds until end of the game (limited rounds like poker, a winner has been found like blackjack...)
     1. Loop players
         1. players perform action
 4. define winner
  
-### AI
-It has been decided to 
+### Machine Learning
+(out of scope but an interesting approach)
+Given the chosen structure, the `BotDecisionMaker` can be implemented with configurable values. Such configuration can be tested running the program X number of times. Evaluating the results, the winning values can be selected for further runs with minor modifications evolving the bot in such way helps find an ideal configuration.    

@@ -70,7 +70,7 @@ public class PokerRank {
 		allCards.addAll(cards);
 		allCards.addAll(communityFlopCards);
 
-		// TODO MM implement all the hands
+		// TODO MM implement all the ranks
 		if (isFourOfAKind(allCards)) {
 			return 4;
 		} else if (isthreeOfAKind(allCards)) {
