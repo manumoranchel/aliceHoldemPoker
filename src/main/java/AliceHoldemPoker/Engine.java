@@ -30,6 +30,9 @@ public class Engine {
 	/** Utility class to determine the winner */
 	private PokerRank pokerRank;
 
+	/**
+	 * Main method performing the game
+	 */
 	public void run() {
 		setup();
 
@@ -41,6 +44,23 @@ public class Engine {
 		}
 		Integer winner = getPokerRank().rankPlayers(getGameState());
 		System.out.println(MessageFormat.format("Player[{0}] wins. gameState:[{1}]]", gameState.getPlayers().get(winner), getGameState()));
+	}
+	
+
+	/**
+	 * Creates the initial state for the game
+	 * 
+	 */
+	public void setup() {
+		logger.log(Level.INFO, "Setting up the game");
+		setGameState(new GameState());
+		logger.log(Level.INFO, "Game play set");
+		logger.log(Level.INFO, "Setting up player");
+		initPlayers();
+		logger.log(Level.INFO, "Players initialised");
+		logger.log(Level.INFO, "Setting PokerRank");
+		setPokerRank(new PokerRank());
+		logger.log(Level.INFO, "PokerRank set");
 	}
 
 	/**
@@ -59,22 +79,6 @@ public class Engine {
 
 			logger.log(Level.INFO, "After dealing, player state: [{0}]", player.toString());
 		}
-	}
-
-	/**
-	 * Creates the initial state for the game
-	 * 
-	 */
-	public void setup() {
-		logger.log(Level.INFO, "Setting up the game");
-		setGameState(new GameState());
-		logger.log(Level.INFO, "Game play set");
-		logger.log(Level.INFO, "Setting up player");
-		initPlayers();
-		logger.log(Level.INFO, "Players initialised");
-		logger.log(Level.INFO, "Setting PokerRank");
-		setPokerRank(new PokerRank());
-		logger.log(Level.INFO, "PokerRank set");
 	}
 
 	/**

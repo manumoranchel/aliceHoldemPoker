@@ -22,14 +22,14 @@ public class Player {
 
 	/** Is the player still playing? */
 	private boolean playing;
-	
+
 	/** Delegate the game play to Player Visitor */
 	private PlayerVisitor decisionManager;
 
 //	TODO MM to implement in further iterations
 //	private  int totalMoney;
 //	private int currentBet;
-	
+
 	public Player(String name, List<Card> cards, boolean playing, PlayerVisitor decisionManager) {
 		super();
 		this.name = name;
@@ -37,7 +37,7 @@ public class Player {
 		this.playing = playing;
 		this.decisionManager = decisionManager;
 	}
-	
+
 	public Player() {
 		super();
 		this.name = "";
@@ -45,7 +45,7 @@ public class Player {
 		this.playing = true;
 		this.decisionManager = new BotDecisionMaker();
 	}
-	
+
 	public Player(String name, PlayerVisitor decisionManager) {
 		super();
 		this.name = name;
@@ -53,10 +53,11 @@ public class Player {
 		this.cards = new ArrayList<Card>();
 		this.playing = true;
 	}
-	
+
 	/**
 	 * Wrapper method to expose the verdict of the DecisionManager
-	 * @return true if the players calls the 
+	 * 
+	 * @return true if the players calls the
 	 */
 	public boolean play(GameState gameState) {
 		setPlaying(getDecisionManager().play(this, gameState));
@@ -94,7 +95,7 @@ public class Player {
 	public void setDecisionManager(PlayerVisitor decisionManager) {
 		this.decisionManager = decisionManager;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -109,6 +110,5 @@ public class Player {
 		builder.append("]");
 		return builder.toString();
 	}
-
 
 }
