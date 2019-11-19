@@ -3,6 +3,9 @@ package AliceHoldemPoker.VO;
 import java.util.ArrayList;
 import java.util.List;
 
+import AliceHoldemPoker.player.BotDecisionMaker;
+import AliceHoldemPoker.player.PlayerVisitor;
+
 /**
  * Representation of the Player and the cards playing
  * 
@@ -20,17 +23,19 @@ public class Player {
 	/** Is the player still playing? */
 	private boolean playing;
 	
+	/** Delegate the game play to Player Visitor */
+	private PlayerVisitor decisionManager;
 
 //	TODO MM to implement in further iterations
 //	private  int totalMoney;
 //	private int currentBet;
-//	private PlayerVisitor decisionManager;
 	
-	public Player(String name, List<Card> cards, boolean playing) {
+	public Player(String name, List<Card> cards, boolean playing, PlayerVisitor decisionManager) {
 		super();
 		this.name = name;
 		this.cards = cards;
 		this.playing = playing;
+		this.decisionManager = decisionManager;
 	}
 	
 	public Player() {
@@ -38,11 +43,13 @@ public class Player {
 		this.name = "";
 		this.cards = new ArrayList<Card>();
 		this.playing = true;
+		this.decisionManager = new BotDecisionMaker();
 	}
 	
-	public Player(String name) {
+	public Player(String name, PlayerVisitor decisionManager) {
 		super();
 		this.name = name;
+		this.decisionManager = decisionManager;
 		this.cards = new ArrayList<Card>();
 		this.playing = true;
 	}
@@ -51,10 +58,9 @@ public class Player {
 	 * Wrapper method to expose the verdict of the DecisionManager
 	 * @return true if the players calls the 
 	 */
-	public boolean play() {
-		//Decide whether the players calls in the rounds.
-		//TODO MM delegate to the decisionManager
-		return true;
+	public boolean play(GameState gameState) {
+		setPlaying(getDecisionManager().play(this, gameState));
+		return isPlaying();
 	}
 
 	public String getName() {
@@ -81,6 +87,14 @@ public class Player {
 		this.playing = playing;
 	}
 
+	public PlayerVisitor getDecisionManager() {
+		return decisionManager;
+	}
+
+	public void setDecisionManager(PlayerVisitor decisionManager) {
+		this.decisionManager = decisionManager;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

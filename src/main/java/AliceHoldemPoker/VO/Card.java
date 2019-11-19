@@ -30,7 +30,6 @@ public class Card {
 		this.number = number;
 		this.suit = suit;
 	}
-	
 
 	public Card() {
 		super();
